@@ -11,7 +11,12 @@ export default function InputField({ label, name, type, placeholder }: InputFiel
   return (
     <label className="flex flex-col gap-1">
       {label}:
-      <input className="text-black" type={type} name={name} placeholder={placeholder} />
+      <input
+      className="text-black border rounded-md focus:border-gray-700 py-2 px-4"
+      type={type}
+      name={name}
+      placeholder={placeholder}
+      />
     </label>
   );
 };

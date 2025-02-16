@@ -1,5 +1,5 @@
 "use server";
-import { fetchData } from "@/service/api.service";
+import { post } from "@/service/api.service";
 
 export interface Props {
   name: string;
@@ -7,14 +7,22 @@ export interface Props {
   email: string;
   birthdate: string;
   work: string;
+  course: string;
   password: string;
 }
 
-export default async function registerUer(props: Props) {
-  const responseRegister = await fetchData("/auth/register", {
-    body: JSON.stringify(props),
-    method: "POST",
-  });
-
-  return responseRegister;
+export default async function registerUser(props: Props) {
+  try {
+    const response = await post<{
+      access_token: string;
+    }>("/auth/register", {
+      body: JSON.stringify(props),
+    });
+  
+    return response;
+  }
+  catch (error) {
+    console.error(error);
+    return null;
+  }
 }
