@@ -3,7 +3,7 @@ import { ButtonHTMLAttributes } from "react";
 interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
-  type: ButtonHTMLAttributes<HTMLButtonElement>['type'];  
+  type: ButtonHTMLAttributes<HTMLButtonElement>["type"];
 }
 
 const Button = ({ children, onClick, type }: ButtonProps) => {

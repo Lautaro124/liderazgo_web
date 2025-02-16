@@ -18,10 +18,9 @@ export default async function registerUser(props: Props) {
     }>("/auth/register", {
       body: JSON.stringify(props),
     });
-  
+
     return response;
-  }
-  catch (error) {
+  } catch (error) {
     console.error(error);
     return null;
   }
