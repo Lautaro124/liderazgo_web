@@ -21,3 +21,8 @@ body {
   width: 100vw;
   height: 100vh;
 }
+
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}

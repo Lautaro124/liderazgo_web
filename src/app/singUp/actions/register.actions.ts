@@ -2,8 +2,7 @@
 import { post } from "@/service/api.service";
 
 export interface Props {
-  name: string;
-  lastName: string;
+  fullName: string;
   email: string;
   birthdate: string;
   work: string;
