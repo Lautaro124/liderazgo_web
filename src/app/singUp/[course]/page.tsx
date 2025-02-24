@@ -39,65 +39,64 @@ export default function SingUp() {
         title="Crea tu cuenta"
         subtitle="Únete a nuestra plataforma de aprendizaje"
       />
-      <section className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="sm:bg-white py-8 px-4 sm:shadow-lg sm:rounded-lg sm:px-10">
-          <Form onSubmit={handleSubmit}>
-            <InputField
-              label="Nombre completo"
-              name="fullName"
-              type="text"
-              required
-              placeholder="Juan Pérez"
-              icon={<User className="h-5 w-5 text-gray-400" />}
-            />
-            <InputField
-              label="Fecha de nacimiento"
-              name="birthdate"
-              type="date"
-              required
-              icon={<Calendar className="h-5 w-5 text-gray-400" />}
-            />
-            <InputField
-              label="Oficio"
-              name="work"
-              type="text"
-              required
-              placeholder="Estudiante, Profesional, etc."
-              icon={<Briefcase className="h-5 w-5 text-gray-400" />}
-            />
-            <InputField
-              label="Correo"
-              name="email"
-              type="email"
-              autoComplete="email"
-              icon={<Mail className="h-5 w-5 text-gray-400" />}
-              required
-              placeholder="ejemplo@gmail.com"
-            />
-            <InputField
-              label="Contraseña"
-              name="password"
-              type="password"
-              icon={<Lock className="h-5 w-5 text-gray-400" />}
-              placeholder="••••••••"
-              required
-            />
-            <InputField
-              label="Confirmar contraseña"
-              name="passwordConfirm"
-              type="password"
-              icon={<Lock className="h-5 w-5 text-gray-400" />}
-              placeholder="••••••••"
-              required
-            />
-            <Button type="submit">Enviar</Button>
-          </Form>
-          <SingRedirect
-            redirect="/"
-            text="¿Ya tienes una cuenta?"
-            buttonText="Inicia sesión"
+      <section className="mt-8 sm:mx-auto sm:w-full sm:max-w-md sm:bg-white py-8 px-4 sm:shadow-lg sm:rounded-lg sm:px-10">
+        <Form onSubmit={handleSubmit}>
+          <InputField
+            label="Nombre completo"
+            name="fullName"
+            type="text"
+            required
+            placeholder="Juan Pérez"
+            icon={<User className="h-5 w-5 text-gray-400" />}
           />
-        </div>
+          <InputField
+            label="Fecha de nacimiento"
+            name="birthdate"
+            type="date"
+            required
+            icon={<Calendar className="h-5 w-5 text-gray-400" />}
+          />
+          <InputField
+            label="Oficio"
+            name="work"
+            type="text"
+            required
+            placeholder="Estudiante, Profesional, etc."
+            icon={<Briefcase className="h-5 w-5 text-gray-400" />}
+          />
+          <InputField
+            label="Correo"
+            name="email"
+            type="email"
+            autoComplete="email"
+            icon={<Mail className="h-5 w-5 text-gray-400" />}
+            required
+            placeholder="ejemplo@gmail.com"
+          />
+          <InputField
+            label="Contraseña"
+            name="password"
+            type="password"
+            icon={<Lock className="h-5 w-5 text-gray-400" />}
+            placeholder="••••••••"
+            required
+            
+          />
+          <InputField
+            label="Confirmar contraseña"
+            name="passwordConfirm"
+            type="password"
+            icon={<Lock className="h-5 w-5 text-gray-400" />}
+            placeholder="••••••••"
+            required
+          />
+          <Button type="submit">Enviar</Button>
+        </Form>
+        <SingRedirect
+          redirect="/"
+          text="¿Ya tienes una cuenta?"
+          buttonText="Inicia sesión"
+        />
       </section>
     </main>
   );
