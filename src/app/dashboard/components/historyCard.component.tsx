@@ -1,5 +1,5 @@
 import { Clock, PlayCircle } from "lucide-react";
-import { Course } from "../interface/course.interface";
+import { ICourse } from "../interface/course.interface";
 
 export const HistoryCard = ({
   image,
@@ -8,7 +8,7 @@ export const HistoryCard = ({
   totalLessons,
   completedLessons,
   progress,
-}: Course) => {
+}: ICourse) => {
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row h-full">
       <div className="md:w-2/5 relative">

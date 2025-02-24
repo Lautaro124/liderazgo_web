@@ -1,8 +1,8 @@
 import React from "react";
-import { Course } from "../interface/course.interface";
+import { ICourse } from "../interface/course.interface";
 import { Lock } from 'lucide-react';
 
-const Card = ({image, title, description, isPurchased, completedLessons, totalLessons, progress,}: Course) => {
+const Card = ({image, title, description, isPurchased, completedLessons, totalLessons, progress,}: ICourse) => {
   return (
     <div
       className="bg-white rounded-lg shadow-lg overflow-hidden"

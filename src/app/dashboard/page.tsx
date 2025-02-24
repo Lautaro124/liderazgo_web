@@ -1,10 +1,10 @@
 import { BookOpenCheck, Calendar, Trophy } from "lucide-react";
-import { Course } from "./interface/course.interface";
+import { ICourse } from "./interface/course.interface";
 import Card from "./components/cards.components";
 import { HistoryCard } from "./components/historyCard.component";
 
 export default function HomePage() {
-  const courses: Course[] = [
+  const courses: ICourse[] = [
     {
       id: 1,
       title: "React Avanzado",
