@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
 import "./globals.css";
-
-const poppins = Poppins({
-  variable: "--font-poppins",
-  subsets: ["latin"],
-  weight: "400",
-});
+import { poppins } from "@/utils/typography.utils";
 
 export const metadata: Metadata = {
   title: "Curso de Liderazgo",
@@ -19,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} antialiased`}>{children}</body>
+      <body className={`${poppins.className} antialiased bg-gray-50`}>{children}</body>
     </html>
   );
 }
