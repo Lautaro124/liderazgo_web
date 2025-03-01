@@ -1,10 +1,12 @@
 "use client";
+import registerUser from "@/app/singUp/actions/register.actions";
 import registerUer from "@/app/singUp/actions/register.actions";
 import Button from "@/components/button.component";
 import Form from "@/components/Form.component";
 import InputField from "@/components/InputField.component";
 import { SingsHeader } from "@/components/SingsHeader.component";
 import { SingRedirect } from "@/components/SingsRedirect.component";
+import { post } from "@/service/api.service";
 import { setStorage } from "@/utils/storage.utils";
 import { Briefcase, Calendar, Mail, User, Lock } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
@@ -16,7 +18,7 @@ export default function SingUp() {
   const handleSubmit = async (formData: FormData) => {
     const fullName = formData.get("fullName") as string;
     const email = formData.get("email") as string;
-    const work = formData.get("work") as string;
+    const ocupation = formData.get("work") as string;
     const birthdate = formData.get("birthdate") as string;
     const password = formData.get("password") as string;
     const passwordConfirm = formData.get("passwordConfirm") as string;
@@ -25,11 +27,19 @@ export default function SingUp() {
       console.log("Las contraseñas no coinciden");
       return;
     }
-    const user = { fullName, email, work, birthdate, password, course };
-    const response = await registerUer(user);
+
+    const user = { fullName, email, ocupation, birthdate, password, course };
+    const response = await registerUser({
+      fullName,
+      email,
+      ocupation,
+      birthdate,
+      password,
+      // course,
+    });
     if (response) {
-      setStorage("access_token", response.access_token);
-      route.push("/home");
+      // setStorage("access_token", response);
+      route.push("/dashboard");
     }
   };
 
@@ -80,7 +90,6 @@ export default function SingUp() {
             icon={<Lock className="h-5 w-5 text-gray-400" />}
             placeholder="••••••••"
             required
-            
           />
           <InputField
             label="Confirmar contraseña"

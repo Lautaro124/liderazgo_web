@@ -121,7 +121,7 @@ npm run dev
                 Descripción de la clase
               </h2>
             </div>
-            <div className="p-6 prose max-w-none overflow-auto">
+            <div className="p-6 prose overflow-auto">
               <ReactMarkdown>{claseActual.descripcion}</ReactMarkdown>
             </div>
           </div>

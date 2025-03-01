@@ -8,21 +8,29 @@ export async function fetchData<T>(
     throw new Error("API_URL is not defined");
   }
   const url = `${apiUrl}${path}`;
-  const response = await fetch(url, {
-    headers: {
-      "Content-Type": "application/json",
-      ...(token && { Authorization: `Bearer ${token}` }),
-      ...options?.headers,
-    },
-    ...options,
-  });
 
-  if (response.status !== 200) {
+  try {
+    const response = await fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        ...(token && { Authorization: `Bearer ${token}` }),
+        ...options?.headers,
+      },
+      ...options,
+    });
+  
+    if (!response.ok) {
+      console.error('Error Json: ',await response.json())
+      throw new Error(`Error en la petición: ${response.status} ${response.statusText}`);
+    }
+  
+    const data = await response.json();
+    return data;
+    
+  } catch (error) {
+    console.error(error);
     throw new Error("Error en la petición");
   }
-
-  const data = await response.json();
-  return data;
 }
 
 export async function post<T>(

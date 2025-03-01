@@ -3,6 +3,7 @@ import Button from "@/components/button.component";
 import Form from "@/components/Form.component";
 import InputField from "@/components/InputField.component";
 import { SingsHeader } from "@/components/SingsHeader.component";
+import { SingRedirect } from "@/components/SingsRedirect.component";
 import { Mail, Lock } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -15,7 +16,7 @@ export default function Home() {
     console.log("🚀 ~ handleSubmit ~ email:", email);
     const password = formData.get("password") as string;
     console.log("🚀 ~ handleSubmit ~ password:", password);
-    route.push("/home");
+    route.push("/dasboard");
   };
 
   return (
@@ -46,6 +47,11 @@ export default function Home() {
           />
           <Button type="submit">Iniciar sesion</Button>
         </Form>
+        <SingRedirect
+          redirect="/singUp/s"
+          text="¿No tienes cuenta?"
+          buttonText="Crea tu cuenta"
+        />
       </section>
     </main>
   );
