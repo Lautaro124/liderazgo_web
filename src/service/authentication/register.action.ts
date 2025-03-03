@@ -1,7 +1,8 @@
 "use server";
+import { IAuthResponse } from "@/interface/auth.interface";
 import { post } from "@/service/api.service";
 
-export interface Props {
+export interface RegisterAction {
   fullName: string;
   email: string;
   birthdate: string;
@@ -9,13 +10,12 @@ export interface Props {
   password: string;
 }
 
-export default async function registerUser(props: Props) {
+export async function registerUser(props: RegisterAction) {
   try {
-    const response = await post("/auth/register", props);
+    const response = await post<IAuthResponse>("/auth/register", props);
 
     return response;
   } catch (error) {
-    console.error(error);
     return null;
   }
 }

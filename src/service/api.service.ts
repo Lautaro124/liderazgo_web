@@ -21,7 +21,7 @@ export async function fetchData<T>(
   
     if (!response.ok) {
       console.error('Error Json: ',await response.json())
-      throw new Error(`Error en la petición: ${response.status} ${response.statusText}`);
+      throw new Error(`Error en la petición: ${response.status}`);
     }
   
     const data = await response.json();

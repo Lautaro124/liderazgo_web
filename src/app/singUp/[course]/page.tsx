@@ -1,12 +1,10 @@
 "use client";
-import registerUser from "@/app/singUp/actions/register.actions";
-import registerUer from "@/app/singUp/actions/register.actions";
 import Button from "@/components/button.component";
 import Form from "@/components/Form.component";
 import InputField from "@/components/InputField.component";
 import { SingsHeader } from "@/components/SingsHeader.component";
 import { SingRedirect } from "@/components/SingsRedirect.component";
-import { post } from "@/service/api.service";
+import { registerUser } from "@/service/authentication/register.action";
 import { setStorage } from "@/utils/storage.utils";
 import { Briefcase, Calendar, Mail, User, Lock } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
@@ -28,7 +26,6 @@ export default function SingUp() {
       return;
     }
 
-    const user = { fullName, email, ocupation, birthdate, password, course };
     const response = await registerUser({
       fullName,
       email,
@@ -38,7 +35,7 @@ export default function SingUp() {
       // course,
     });
     if (response) {
-      // setStorage("access_token", response);
+      setStorage("access_token", response.token);
       route.push("/dashboard");
     }
   };
