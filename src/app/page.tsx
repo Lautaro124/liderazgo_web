@@ -4,13 +4,18 @@ import Form from "@/components/Form.component";
 import InputField from "@/components/InputField.component";
 import { SingsHeader } from "@/components/SingsHeader.component";
 import { SingRedirect } from "@/components/SingsRedirect.component";
-import { loginAction } from "@/service/authentication/login.action";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux.hooks";
+import { saveUser } from "@/redux/slice/user.slice";
+import { loginAction } from "@/service/authentication/login.service";
 import { setStorage } from "@/utils/storage.utils";
 import { Mail, Lock } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
   const route = useRouter();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
 
   const handleSubmit = async (formData: FormData) => {
     const email = formData.get("email") as string;
@@ -18,9 +23,15 @@ export default function Home() {
     const response = await loginAction({ email, password });
     if (response) {
       setStorage("access_token", response.token);
-      route.push("/dashboard");
+      dispatch(saveUser(response.user));
     }
   };
+
+  useEffect(() => {
+    if (user.fullName !== "") {
+      route.push("/dashboard");
+    }
+  }, [user]);
 
   return (
     <main className="flex flex-col gap-2 justify-center items-center px-4 w-screen h-full">

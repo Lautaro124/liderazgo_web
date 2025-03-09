@@ -18,15 +18,14 @@ export async function fetchData<T>(
       },
       ...options,
     });
-  
+
     if (!response.ok) {
-      console.error('Error Json: ',await response.json())
+      console.error("Error Json: ", await response.json());
       throw new Error(`Error en la petición: ${response.status}`);
     }
-  
+
     const data = await response.json();
     return data;
-    
   } catch (error) {
     console.error(error);
     throw new Error("Error en la petición");
@@ -36,8 +35,7 @@ export async function fetchData<T>(
 export async function post<T>(
   path: string,
   body: unknown,
-  options?: RequestInit,
-  token?: string
+  reqParams?: { options?: RequestInit; token?: string }
 ) {
   return fetchData<T>(
     path,
@@ -45,17 +43,16 @@ export async function post<T>(
       method: "POST",
       body: JSON.stringify(body),
       cache: "no-cache",
-      ...options,
+      ...reqParams?.options,
     },
-    token
+    reqParams?.token
   );
 }
 
 export async function put<T>(
   path: string,
   body: unknown,
-  options?: RequestInit,
-  token?: string
+  reqParams?: { options?: RequestInit; token?: string }
 ) {
   return fetchData<T>(
     path,
@@ -63,16 +60,15 @@ export async function put<T>(
       method: "PUT",
       body: JSON.stringify(body),
       cache: "no-cache",
-      ...options,
+      ...reqParams?.options,
     },
-    token
+    reqParams?.token
   );
 }
 
 export async function get<T>(
   path: string,
-  options?: RequestInit,
-  token?: string
+  reqParams?: { options?: RequestInit; token?: string }
 ) {
-  return fetchData<T>(path, options, token);
+  return fetchData<T>(path, reqParams?.options, reqParams?.token);
 }

@@ -1,7 +1,6 @@
 "use client";
 import { ChevronDown, ChevronUp, Play } from "lucide-react";
 import { useState } from "react";
-import { ICourse } from "../interface/course.interface";
 import Card from "../components/cards.components";
 
 interface IClass {
@@ -19,23 +18,7 @@ interface IModule {
 
 export default function CourseView() {
   const [modulosExpandidos, setModulosExpandidos] = useState<number[]>([1]);
-  const course: ICourse = {
-    id: 1,
-    title: "React Avanzado",
-    description:
-      "Aprende las últimas características de React y patrones avanzados",
-    image:
-      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-    progress: 60,
-    isPurchased: true,
-    lastLesson: {
-      title: "Hooks Personalizados",
-      duration: "15:30",
-      module: "Módulo 3: Hooks Avanzados",
-    },
-    totalLessons: 24,
-    completedLessons: 14,
-  };
+  
 
   const modulos: IModule[] = [
     {
@@ -127,7 +110,7 @@ export default function CourseView() {
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <section className="mb-8">
-        <Card {...course} />
+        {/* <Card {...course} /> */}
       </section>
       <section className="bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="p-6">

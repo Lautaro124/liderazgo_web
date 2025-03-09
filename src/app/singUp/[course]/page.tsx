@@ -4,7 +4,7 @@ import Form from "@/components/Form.component";
 import InputField from "@/components/InputField.component";
 import { SingsHeader } from "@/components/SingsHeader.component";
 import { SingRedirect } from "@/components/SingsRedirect.component";
-import { registerUser } from "@/service/authentication/register.action";
+import { registerUser } from "@/service/authentication/register.service";
 import { setStorage } from "@/utils/storage.utils";
 import { Briefcase, Calendar, Mail, User, Lock } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";

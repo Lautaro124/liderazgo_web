@@ -1,25 +1,12 @@
-export interface ICourse {
-  title: string;
-  description: string;
-  image: string;
-  progress: number;
-  isPurchased: boolean;
-  modules: number;
-  lastLesson?: {
-    title: string;
-    duration: string;
-    module: string;
-  };
-  totalLessons: number;
-  completedLessons: number;
-}
+import { IModules } from "./module.interface";
 
-export interface IModules {
-  name: string;
-  classes: IClass[];
-  price: number;
+export interface ICourse {
+  id: number;
+  title: string;
+  previewImage: string;
   isPurchased: boolean;
-  description: string;
+  shortDescription: string;
+  modules: IModules[];
 }
 
 export interface IFiles {
