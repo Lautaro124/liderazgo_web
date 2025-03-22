@@ -1,3 +1,4 @@
+import { IClass } from "./class.inteface";
 import { ICourse } from "./course.interface";
 
 export interface IModules {
@@ -5,6 +6,6 @@ export interface IModules {
   name: string;
   description: string;
   price: number;
-  // inscriptions: Inscriptions[];
+  classes: IClass[];
   course: ICourse;
 }

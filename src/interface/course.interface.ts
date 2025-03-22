@@ -15,19 +15,3 @@ export interface IFiles {
   size: string;
   url: string;
 }
-
-export interface IClass {
-  moduleTitle: number;
-  title: string;
-  videoUrl: string;
-  description: string;
-  files: IFiles[];
-  next?: {
-    name: string;
-    moduleTitle: string;
-  };
-  anterior?: {
-    name: string;
-    moduleTitle: string;
-  };
-}
