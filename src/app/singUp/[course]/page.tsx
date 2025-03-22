@@ -5,13 +5,11 @@ import InputField from "@/components/InputField.component";
 import { SingsHeader } from "@/components/SingsHeader.component";
 import { SingRedirect } from "@/components/SingsRedirect.component";
 import { registerUser } from "@/service/authentication/register.service";
-import { setStorage } from "@/utils/storage.utils";
 import { Briefcase, Calendar, Mail, User, Lock } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 
 export default function SingUp() {
   const route = useRouter();
-  const { course } = useParams<{ course: string }>();
 
   const handleSubmit = async (formData: FormData) => {
     const fullName = formData.get("fullName") as string;
@@ -32,10 +30,8 @@ export default function SingUp() {
       ocupation,
       birthdate,
       password,
-      // course,
     });
     if (response) {
-      setStorage("access_token", response.token);
       route.push("/dashboard");
     }
   };

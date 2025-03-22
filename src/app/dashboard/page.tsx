@@ -1,13 +1,52 @@
+"use client";
+
 import { BookOpenCheck, Calendar, Trophy } from "lucide-react";
 import Card from "./components/cards.components";
 import { HistoryCard } from "./components/historyCard.component";
 import { getAllCourses } from "@/service/course/getCourse.service";
+import { useEffect, useState } from "react";
+import { ICourse } from "@/interface/course.interface";
+import { useRouter } from "next/navigation";
 
-export default async function HomePage() {
-  const courses = await getAllCourses()
-  console.log("🚀 ~ HomePage ~ coursexd:", courses)
-  
-  if(!courses) return <div>loading...</div>
+export default function HomePage() {
+  const [courses, setCourses] = useState<ICourse[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const coursesData = await getAllCourses();
+        if (coursesData) {
+          setCourses(coursesData);
+        }
+      } catch (error) {
+        console.error("Error al cargar los cursos:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, [router]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-lg">Cargando...</div>
+      </div>
+    );
+  }
+
+  if (!courses) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-lg text-red-600">
+          No se pudieron cargar los cursos
+        </div>
+      </div>
+    );
+  }
 
   const stats = [
     {

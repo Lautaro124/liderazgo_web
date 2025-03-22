@@ -3,11 +3,10 @@ import Button from "@/components/button.component";
 import Form from "@/components/Form.component";
 import InputField from "@/components/InputField.component";
 import { SingsHeader } from "@/components/SingsHeader.component";
-import { SingRedirect } from "@/components/SingsRedirect.component";
+// import { SingRedirect } from "@/components/SingsRedirect.component";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux.hooks";
 import { saveUser } from "@/redux/slice/user.slice";
 import { loginAction } from "@/service/authentication/login.service";
-import { setStorage } from "@/utils/storage.utils";
 import { Mail, Lock } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -22,8 +21,7 @@ export default function Home() {
     const password = formData.get("password") as string;
     const response = await loginAction({ email, password });
     if (response) {
-      setStorage("access_token", response.token);
-      dispatch(saveUser(response.user));
+      dispatch(saveUser(response));
     }
   };
 

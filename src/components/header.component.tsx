@@ -4,7 +4,6 @@ import { BookOpen } from "lucide-react";
 
 export const Header = () => {
   const user = useAppSelector((state) => state.user);
-  console.log("🚀 ~ Header ~ user:", user);
   if (user.fullName === "") return null;
 
   return (

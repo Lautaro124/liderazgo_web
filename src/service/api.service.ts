@@ -1,74 +1,71 @@
-export async function fetchData<T>(
+"use server";
+import { cookies } from "next/headers";
+
+export async function fetchData(
   path: string,
-  options?: RequestInit,
-  token?: string
-): Promise<T> {
+  options?: RequestInit
+): Promise<Response> {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   if (!apiUrl) {
     throw new Error("API_URL is not defined");
   }
   const url = `${apiUrl}${path}`;
+  const cookieStore = await cookies();
 
   try {
     const response = await fetch(url, {
+      ...options,
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
+        Cookie: cookieStore.toString(),
         ...options?.headers,
       },
-      ...options,
+      cache: "no-store",
     });
 
     if (!response.ok) {
-      console.error("Error Json: ", await response.json());
-      throw new Error(`Error en la petición: ${response.status}`);
+      throw new Error(response.statusText);
     }
 
-    const data = await response.json();
-    return data;
+    return response;
   } catch (error) {
-    console.error(error);
-    throw new Error("Error en la petición");
+    console.error("Error en fetchData:", {
+      error,
+      url,
+      method: options?.method || "GET",
+    });
+    throw error;
   }
 }
 
-export async function post<T>(
+export async function post(
   path: string,
   body: unknown,
-  reqParams?: { options?: RequestInit; token?: string }
 ) {
-  return fetchData<T>(
-    path,
-    {
-      method: "POST",
-      body: JSON.stringify(body),
-      cache: "no-cache",
-      ...reqParams?.options,
-    },
-    reqParams?.token
-  );
+  const response = fetchData(path, {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+
+  return await response;
 }
 
-export async function put<T>(
+export async function put(
   path: string,
   body: unknown,
-  reqParams?: { options?: RequestInit; token?: string }
 ) {
-  return fetchData<T>(
-    path,
-    {
-      method: "PUT",
-      body: JSON.stringify(body),
-      cache: "no-cache",
-      ...reqParams?.options,
-    },
-    reqParams?.token
-  );
+  const response = fetchData(path, {
+    method: "PUT",
+    body: JSON.stringify(body),
+  });
+  return await response;
 }
 
-export async function get<T>(
-  path: string,
-  reqParams?: { options?: RequestInit; token?: string }
-) {
-  return fetchData<T>(path, reqParams?.options, reqParams?.token);
+export async function get(path: string, options?: RequestInit) {
+  const response = fetchData(path, {
+    method: "GET",
+    ...options,
+  });
+  return await response;
 }
