@@ -1,109 +1,29 @@
+import { getClass } from "@/service/class/getClass.service";
 import {
   BookOpen,
-  ChevronLeft,
-  ChevronRight,
   Download,
   FileText,
   Video,
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
-interface Archivo {
-  id: number;
-  nombre: string;
-  tipo: string;
-  tamano: string;
-  url: string;
-}
 
-interface ClaseActual {
-  id: number;
-  moduloId: number;
-  nombre: string;
-  videoUrl: string;
-  descripcion: string;
-  archivos: Archivo[];
-  siguiente?: {
-    id: number;
-    nombre: string;
-    moduloNombre: string;
-  };
-  anterior?: {
-    id: number;
-    nombre: string;
-    moduloNombre: string;
-  };
-}
+export default async function ClassView({params}: {params: Promise<{course: string, class: string}>}) {
 
-export default function ClassView() {
-  const claseActual: ClaseActual = {
-    id: 2,
-    moduloId: 1,
-    nombre: "1.2 Configuración del entorno",
-    videoUrl: "https://example.com/video.mp4", // URL de ejemplo
-    descripcion: `# Configuración del entorno de desarrollo
+  const {course, class: classId} = await params;
 
-En esta clase aprenderemos a configurar nuestro entorno de desarrollo para React.
-
-## Requisitos previos
-
-- Node.js instalado
-- Un editor de código (recomendamos VS Code)
-- Conocimientos básicos de terminal
-
-## Pasos a seguir
-
-1. Instalar Create React App
-2. Configurar el editor
-3. Instalar extensiones útiles
-
-### Comandos importantes
-
-\`\`\`bash
-npm create vite@latest my-app -- --template react-ts
-cd my-app
-npm install
-npm run dev
-\`\`\`
-
-> **Nota**: Asegúrate de tener la última versión de Node.js instalada.`,
-    archivos: [
-      {
-        id: 1,
-        nombre: "configuracion-inicial.pdf",
-        tipo: "PDF",
-        tamano: "2.5 MB",
-        url: "#",
-      },
-      {
-        id: 2,
-        nombre: "codigo-ejemplo.zip",
-        tipo: "ZIP",
-        tamano: "1.8 MB",
-        url: "#",
-      },
-    ],
-    anterior: {
-      id: 1,
-      nombre: "1.1 Bienvenida al curso",
-      moduloNombre: "Módulo 1: Introducción a React",
-    },
-    siguiente: {
-      id: 3,
-      nombre: "1.3 Creando tu primera aplicación",
-      moduloNombre: "Módulo 1: Introducción a React",
-    },
-  };
+  const currentClass = await getClass(Number(course), Number(classId));
+  console.log("🚀 ~ ClassView ~ claseActual:", currentClass)
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
       <div className="mb-6">
         <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
-          {claseActual.nombre}
+          {currentClass.title}
         </h1>
-        <p className="text-sm text-gray-500 mt-1">
-          {claseActual.anterior?.moduloNombre}
-        </p>
+        {/* <p className="text-sm text-gray-500 mt-1">
+          {currentClass.}
+        </p> */}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -122,7 +42,7 @@ npm run dev
               </h2>
             </div>
             <div className="p-6 prose overflow-auto">
-              <ReactMarkdown>{claseActual.descripcion}</ReactMarkdown>
+              <ReactMarkdown>{currentClass.description}</ReactMarkdown>
             </div>
           </div>
         </div>
@@ -135,25 +55,31 @@ npm run dev
             </div>
             <div className="p-4">
               <div className="space-y-3">
-                {claseActual.archivos.map((archivo) => (
+                {(!currentClass.files || currentClass.files.length === 0) && (
+                  <div className="flex items-center justify-center h-full">
+                    <p className="text-sm text-gray-500">No hay recursos para esta clase</p>
+                  </div>
+                )}
+                
+                {currentClass.files && currentClass.files.length > 0 && currentClass.files.map((file: any) => (
                   <div
-                    key={archivo.id}
+                    key={file.id}
                     className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                   >
                     <div className="flex items-center space-x-3 min-w-0">
                       <FileText className="h-5 w-5 text-gray-400 flex-shrink-0" />
                       <div className="min-w-0">
                         <p className="text-sm font-medium text-gray-900 truncate">
-                          {archivo.nombre}
+                          {file.name}
                         </p>
                         <p className="text-xs text-gray-500">
-                          {archivo.tipo} • {archivo.tamano}
+                          {file.type} • {file.size}
                         </p>
                       </div>
                     </div>
                     <button
                       className="text-purple-600 hover:text-purple-700 flex-shrink-0 ml-4"
-                      aria-label={`Descargar ${archivo.nombre}`}
+                      aria-label={`Descargar ${file.name}`}
                     >
                       <Download className="h-5 w-5" />
                     </button>
@@ -163,7 +89,7 @@ npm run dev
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-1">
+          {/* <div className="grid grid-cols-2 gap-4 sm:grid-cols-1">
             {claseActual.anterior && (
               <a
                 href="#"
@@ -190,7 +116,7 @@ npm run dev
                 </p>
               </a>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </main>

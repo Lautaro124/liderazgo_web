@@ -1,4 +1,4 @@
-import { getModules } from "@/service/course/getModules.service";
+import { getModules } from "@/service/module/getModules.service";
 import { ModuleAccordion } from "./components/ModuleAccordion";
 
 export default async function CourseView({
