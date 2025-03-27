@@ -4,12 +4,17 @@ import Form from "@/components/Form.component";
 import InputField from "@/components/InputField.component";
 import { SingsHeader } from "@/components/SingsHeader.component";
 import { SingRedirect } from "@/components/SingsRedirect.component";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux.hooks";
+import { saveUser } from "@/redux/slice/user.slice";
 import { registerUser } from "@/service/authentication/register.service";
 import { Briefcase, Calendar, Mail, User, Lock } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function SingUp() {
   const route = useRouter();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
 
   const handleSubmit = async (formData: FormData) => {
     const fullName = formData.get("fullName") as string;
@@ -32,9 +37,15 @@ export default function SingUp() {
       password,
     });
     if (response) {
-      route.push("/dashboard");
+      dispatch(saveUser(response));
     }
   };
+
+  useEffect(() => {
+    if (user.fullName !== "") {
+      route.push("/dashboard");
+    }
+  }, [user]);
 
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">

@@ -4,7 +4,6 @@ import Link from "next/link";
 
 const Card = ({ previewImage, title, shortDescription, isPurchased, id }: ICourse) => {
 
-  console.log("🚀 ~ Card ~ image:", previewImage)
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden">
       <div className="relative">

@@ -42,7 +42,11 @@ export default function Home() {
 
   useEffect(() => {
     if (user.fullName !== "") {
-      route.push("/dashboard");
+      if (user.role === "teacher") {
+        route.push("/admin");
+      } else {
+        route.push("/dashboard");
+      }
     }
   }, [user]);
 

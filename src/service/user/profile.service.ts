@@ -1,15 +1,8 @@
-import { getStorage } from "@/utils/storage.utils";
 import { get } from "../api.service";
 
-export const getUserInfo = async () => {
+export async function getUserInfo() {
   try {
-    const token = getStorage("access_token");
-    if (!token) {
-      return null;
-    }
-    const respose = await get("/user/profile", {
-      token: token,
-    });
+    const respose = await get("/user/profile");
     return respose;
   } catch (error) {
     return null;
