@@ -7,12 +7,4 @@ export interface IClass {
   description: string
   videoUrl: string
   files?: IFiles[];
-  next?: {
-    name: string;
-    moduleTitle: string;
-  };
-  anterior?: {
-    name: string;
-    moduleTitle: string;
-  };
 }

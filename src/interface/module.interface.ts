@@ -7,5 +7,5 @@ export interface IModules {
   description: string;
   price: number;
   classes: IClass[];
-  course: ICourse;
+  course?: ICourse;
 }
