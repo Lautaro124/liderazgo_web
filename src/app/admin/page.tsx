@@ -1,31 +1,17 @@
-import { getAllUsers } from "@/service/user/getAllUsers.service";
-import Link from "next/link";
+import { UserList } from "./components/userList.component";
+import { searchUser } from "@/service/user/searchUser.service";
+type SearchParams = Promise<{ searchName: string } | undefined>;
+export default async function AdminPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  const searchName = (await searchParams)?.searchName;
+  const users = searchUser(searchName);
 
-export default async function AdminPage() {
-  const users = await getAllUsers();
   return (
-    <main>
-      <h1>Admin Page</h1>
-      <table className="w-full border-collapse border">
-        <thead>
-          <tr>
-            <th className="border p-2">Nombre Completo</th>
-            <th className="border p-2">Email</th>
-            <th className="border p-2">Rol</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td className="border p-2">{user.fullName}</td>
-              <td className="border p-2">{user.email}</td>
-              <td className="border p-2">{user.role}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      
-      <Link href="/createCourse">Crear usuario</Link>
+    <main className="grid p-2 gap-3 grid-cols-4 md:grid-cols-5 max-h-full overflow-y-auto">
+      <UserList users={users} />
     </main>
   );
 }
