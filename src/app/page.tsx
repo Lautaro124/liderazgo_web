@@ -66,7 +66,7 @@ export default function Home() {
             autoComplete="email"
             required
             defaultValue={localStorage.getItem("rememberedEmail") || ""}
-            icon={<Mail className="h-5 w-5 text-gray-400" />}
+            leftIcon={<Mail className="h-5 w-5 text-gray-400" />}
           />
           <InputField
             label="Contraseña"
@@ -75,7 +75,7 @@ export default function Home() {
             type="password"
             autoComplete="current-password"
             required
-            icon={<Lock className="h-5 w-5 text-gray-400" />}
+            leftIcon={<Lock className="h-5 w-5 text-gray-400" />}
           />
           <div className="flex items-center">
             <input

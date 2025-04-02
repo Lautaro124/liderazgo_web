@@ -10,7 +10,7 @@ export default async function AdminPage({
   const users = searchUser(searchName);
 
   return (
-    <main className="grid p-2 gap-3 grid-cols-4 md:grid-cols-5 max-h-full overflow-y-auto">
+    <main className="max-w-7xl max-h-vh mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-2 grid gap-3 grid-cols-5 md:grid-cols-6 overflow-hidden">
       <UserList users={users} />
     </main>
   );

@@ -1,5 +1,7 @@
 "use client";
+import InputField from "@/components/InputField.component";
 import { IUser } from "@/interface/user.interface";
+import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
 
@@ -20,7 +22,7 @@ export const UserList = ({ users }: { users: Promise<IUser[]> }) => {
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.value.toLowerCase();
 
-    if(name.length === 0) {
+    if (name.length === 0) {
       router.push("/admin");
     }
     setSearchName(name);
@@ -34,15 +36,17 @@ export const UserList = ({ users }: { users: Promise<IUser[]> }) => {
 
   return (
     <>
-      <section className="w-full flex flex-col gap-2 h-full bg-white shadow-lg rounded-lg p-4 col-span-2 md:col-auto">
-        <div>
-          <label htmlFor="search" className="sr-only">
-            Buscar usuario
-          </label>
-          <input
-            type="text"
+      <section className="w-full flex flex-col gap-2 bg-white shadow-lg rounded-lg p-4 col-span-2 md:col-span-2 overflow-y-auto">
+        <div className="mb-4 flex flex-col gap-3">
+          <h2 className="text-xl font-semibold text-gray-900">
+            Lista de usuarios
+          </h2>
+          <InputField
             id="search"
+            name="search"
+            type="text"
             placeholder="Buscar usuario"
+            rightIcon={<Search className="h-5 w-5 text-gray-400" />}
             className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
             onChange={handleSearch}
           />
@@ -64,7 +68,7 @@ export const UserList = ({ users }: { users: Promise<IUser[]> }) => {
                 alt="Usuario"
               />
             )}
-            <h4>{user.fullName}</h4>
+            <h4 className="text-left">{user.fullName}</h4>
           </button>
         ))}
       </section>

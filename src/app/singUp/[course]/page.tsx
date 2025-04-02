@@ -61,14 +61,14 @@ export default function SingUp() {
             type="text"
             required
             placeholder="Juan Pérez"
-            icon={<User className="h-5 w-5 text-gray-400" />}
+            leftIcon={<User className="h-5 w-5 text-gray-400" />}
           />
           <InputField
             label="Fecha de nacimiento"
             name="birthdate"
             type="date"
             required
-            icon={<Calendar className="h-5 w-5 text-gray-400" />}
+            leftIcon={<Calendar className="h-5 w-5 text-gray-400" />}
           />
           <InputField
             label="Oficio"
@@ -76,14 +76,14 @@ export default function SingUp() {
             type="text"
             required
             placeholder="Estudiante, Profesional, etc."
-            icon={<Briefcase className="h-5 w-5 text-gray-400" />}
+            leftIcon={<Briefcase className="h-5 w-5 text-gray-400" />}
           />
           <InputField
             label="Correo"
             name="email"
             type="email"
             autoComplete="email"
-            icon={<Mail className="h-5 w-5 text-gray-400" />}
+            leftIcon={<Mail className="h-5 w-5 text-gray-400" />}
             required
             placeholder="ejemplo@gmail.com"
           />
@@ -91,7 +91,7 @@ export default function SingUp() {
             label="Contraseña"
             name="password"
             type="password"
-            icon={<Lock className="h-5 w-5 text-gray-400" />}
+            leftIcon={<Lock className="h-5 w-5 text-gray-400" />}
             placeholder="••••••••"
             required
           />
@@ -99,7 +99,7 @@ export default function SingUp() {
             label="Confirmar contraseña"
             name="passwordConfirm"
             type="password"
-            icon={<Lock className="h-5 w-5 text-gray-400" />}
+            leftIcon={<Lock className="h-5 w-5 text-gray-400" />}
             placeholder="••••••••"
             required
           />
