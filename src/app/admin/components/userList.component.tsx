@@ -1,14 +1,22 @@
 "use client";
 import InputField from "@/components/InputField.component";
+import { IInscription } from "@/interface/inscriptions.interface";
 import { IUser } from "@/interface/user.interface";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
 
-export const UserList = ({ users }: { users: Promise<IUser[]> }) => {
+interface UserListProps {
+  users: Promise<IUser[]>;
+  inscriptions?: Promise<IInscription[]>;
+}
+
+export const UserList = ({ users, inscriptions }: UserListProps) => {
   const [currentUser, setCurrentUser] = useState<IUser | null>(null);
   const [searchName, setSearchName] = useState("");
   const usersContent = use(users);
+  const inscriptionsContent = inscriptions ? use(inscriptions) : null;
+  console.log("🚀 ~ UserList ~ inscriptionsContent:", inscriptionsContent)
   const router = useRouter();
 
   const handleUserClick = (user: IUser) => {
@@ -30,9 +38,16 @@ export const UserList = ({ users }: { users: Promise<IUser[]> }) => {
 
   useEffect(() => {
     if (searchName.length > 0) {
-      router.push(`/admin?searchName=${searchName}`);
+      router.push(
+        `/admin?searchName=${searchName}${
+          currentUser ? `&selected=${currentUser.id}` : ""
+        }`
+      );
     }
-  }, [searchName, router]);
+    if (currentUser && searchName.length === 0) {
+      router.push(`/admin?selected=${currentUser.id}`);
+    }
+  }, [searchName, currentUser, router]);
 
   return (
     <>
@@ -92,6 +107,26 @@ export const UserList = ({ users }: { users: Promise<IUser[]> }) => {
           <p className="text-gray-500">
             Selecciona un usuario para ver los detalles.
           </p>
+        )}
+        {currentUser && inscriptionsContent && (
+          <div className="mt-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              Inscripciones
+            </h3>
+            {inscriptionsContent.map((inscription) => (
+              <div key={inscription.id} className="mb-2">
+                <p>
+                  <strong>Módulo:</strong> {inscription.module.name}
+                </p>
+                <p>
+                  <strong>Curso:</strong> {inscription.course.title}
+                </p>
+                <p>
+                  <strong>Fecha de inscripción:</strong> {inscription.date}
+                </p>
+              </div>
+            ))}
+          </div>
         )}
       </section>
     </>
