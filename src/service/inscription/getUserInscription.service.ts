@@ -2,6 +2,9 @@ import { IInscription } from "@/interface/inscriptions.interface";
 import { get } from "../api.service";
 
 export async function getUserInscription(id?: string): Promise<IInscription[]> {
+  if (!id) {
+    return [];
+  }
   const response = await get(`/inscriptions/user/${id}`);
 
   if (response.status !== 200) {

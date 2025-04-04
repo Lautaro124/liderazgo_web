@@ -8,16 +8,30 @@ import { use, useEffect, useState } from "react";
 
 interface UserListProps {
   users: Promise<IUser[]>;
-  inscriptions?: Promise<IInscription[]>;
 }
 
-export const UserList = ({ users, inscriptions }: UserListProps) => {
+export const UserList = ({ users }: UserListProps) => {
   const [currentUser, setCurrentUser] = useState<IUser | null>(null);
   const [searchName, setSearchName] = useState("");
   const usersContent = use(users);
-  const inscriptionsContent = inscriptions ? use(inscriptions) : null;
-  console.log("🚀 ~ UserList ~ inscriptionsContent:", inscriptionsContent)
   const router = useRouter();
+
+  const handingRouter = () => {
+    if (searchName.length > 0) {
+      router.push(
+        `/admin?searchName=${searchName}${
+          currentUser ? `&selected=${currentUser.id}` : ""
+        }`
+      );
+    }
+    if (currentUser && searchName.length === 0) {
+      router.push(`/admin?selected=${currentUser.id}`);
+    }
+
+    if(!currentUser) {
+      router.push(`/admin`);
+    }
+  }
 
   const handleUserClick = (user: IUser) => {
     if (currentUser?.id === user.id) {
@@ -37,98 +51,45 @@ export const UserList = ({ users, inscriptions }: UserListProps) => {
   };
 
   useEffect(() => {
-    if (searchName.length > 0) {
-      router.push(
-        `/admin?searchName=${searchName}${
-          currentUser ? `&selected=${currentUser.id}` : ""
-        }`
-      );
-    }
-    if (currentUser && searchName.length === 0) {
-      router.push(`/admin?selected=${currentUser.id}`);
-    }
+    handingRouter();
   }, [searchName, currentUser, router]);
 
   return (
-    <>
-      <section className="w-full flex flex-col gap-2 bg-white shadow-lg rounded-lg p-4 col-span-2 md:col-span-2 overflow-y-auto">
-        <div className="mb-4 flex flex-col gap-3">
-          <h2 className="text-xl font-semibold text-gray-900">
-            Lista de usuarios
-          </h2>
-          <InputField
-            id="search"
-            name="search"
-            type="text"
-            placeholder="Buscar usuario"
-            rightIcon={<Search className="h-5 w-5 text-gray-400" />}
-            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
-            onChange={handleSearch}
-          />
-        </div>
-        {usersContent.map((user) => (
-          <button
-            onClick={() => {
-              handleUserClick(user);
-            }}
-            className="flex items-center gap-2 mb-4"
-            key={user.id}
-          >
-            {user.avatar ? (
-              <img src={user.avatar} alt="Avatar" />
-            ) : (
-              <img
-                className="h-8 w-8 rounded-full"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt="Usuario"
-              />
-            )}
-            <h4 className="text-left">{user.fullName}</h4>
-          </button>
-        ))}
-      </section>
-      <section className="w-full flex flex-col gap-2 h-full bg-white shadow-lg rounded-lg p-4 col-span-2 md:col-span-4">
-        <h2 className="text-xl font-semibold text-gray-900 mb-6">
-          Detalles del usuario
+    <section className="w-full flex flex-col gap-2 bg-white shadow-lg rounded-lg p-4 col-span-2 md:col-span-2 overflow-y-auto">
+      <div className="mb-4 flex flex-col gap-3">
+        <h2 className="text-xl font-semibold text-gray-900">
+          Lista de usuarios
         </h2>
-        {currentUser ? (
-          <div className="flex flex-col gap-2">
-            <p>
-              <strong>Nombre:</strong> {currentUser.fullName}
-            </p>
-            <p>
-              <strong>Email:</strong> {currentUser.email}
-            </p>
-            <p>
-              <strong>Rol:</strong> {currentUser.role}
-            </p>
-          </div>
-        ) : (
-          <p className="text-gray-500">
-            Selecciona un usuario para ver los detalles.
-          </p>
-        )}
-        {currentUser && inscriptionsContent && (
-          <div className="mt-4">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Inscripciones
-            </h3>
-            {inscriptionsContent.map((inscription) => (
-              <div key={inscription.id} className="mb-2">
-                <p>
-                  <strong>Módulo:</strong> {inscription.module.name}
-                </p>
-                <p>
-                  <strong>Curso:</strong> {inscription.course.title}
-                </p>
-                <p>
-                  <strong>Fecha de inscripción:</strong> {inscription.date}
-                </p>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
-    </>
+        <InputField
+          id="search"
+          name="search"
+          type="text"
+          placeholder="Buscar usuario"
+          rightIcon={<Search className="h-5 w-5 text-gray-400" />}
+          className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"
+          onChange={handleSearch}
+        />
+      </div>
+      {usersContent.map((user) => (
+        <button
+          onClick={() => {
+            handleUserClick(user);
+          }}
+          className={"flex items-center gap-2 px-2 py-3 rounded-md" + (currentUser?.id === user.id ? " bg-gray-200" : "")}
+          key={user.id}
+        >
+          {user.avatar ? (
+            <img src={user.avatar} alt="Avatar" />
+          ) : (
+            <img
+              className="h-8 w-8 rounded-full"
+              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt="Usuario"
+            />
+          )}
+          <h4 className="text-left">{user.fullName}</h4>
+        </button>
+      ))}
+    </section>
   );
 };

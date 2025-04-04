@@ -3,7 +3,7 @@ import { IUser } from "./user.interface"
 export interface IInscription {
   id: number
   user: IUser
-  module: InscriptionModule
+  module: InscriptionModule[]
   course: InscriptionCourse
   date: string
   createdAt: string
