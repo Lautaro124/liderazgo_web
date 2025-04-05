@@ -1,9 +1,9 @@
-import { IInscription } from "@/interface/inscriptions.interface";
+import { IInscriptionsResponse } from "@/interface/inscriptions.interface";
 import { IUser } from "@/interface/user.interface";
 
 interface UserDetailProps {
   userDetials?: IUser;
-  inscriptions: IInscription[];
+  inscriptions: IInscriptionsResponse[];
 }
 
 export const UserDetail = ({ userDetials, inscriptions }: UserDetailProps) => {
@@ -33,7 +33,19 @@ export const UserDetail = ({ userDetials, inscriptions }: UserDetailProps) => {
             <ul className="list-disc list-inside">
               {inscriptions.map((inscription) => (
                 <li key={inscription.id} className="text-sm text-gray-600">
-                  {inscription.course.title} - {inscription.module.length} módulos
+                  <strong>{inscription.title}</strong> - {inscription.description}
+                  <ul className="list-disc list-inside ml-4">
+                    {inscription.modules.map((module) => (
+                      <li key={module.id} className="text-sm text-gray-600">
+                        {module.name} - {module.description} (${module.price})
+                        {module.isPushed ? (
+                          <span className="text-green-500"> (Inscripto)</span>
+                        ) : (
+                          <span className="text-red-500"> (No inscripto)</span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
                 </li>
               ))}
             </ul>
