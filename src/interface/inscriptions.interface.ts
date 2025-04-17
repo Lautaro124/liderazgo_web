@@ -3,8 +3,14 @@ export interface IInscriptionsResponse {
   title: string;
   description: string;
   previewImage: string;
-  isPushed: boolean;
   modules: IModuleWithStatus[];
+  isPushed?: boolean;
+  enrolledDate?: string;
+  progress?: number;
+  isFree?: boolean;
+  isCompleted?: boolean;
+  isInProgress?: boolean;
+  isNotStarted?: boolean;
 }
 
 export interface IModuleWithStatus {
@@ -12,5 +18,11 @@ export interface IModuleWithStatus {
   name: string;
   description: string;
   price: number;
-  isPushed: boolean;
+  isPushed?: boolean; // Propiedad que indica si el usuario está inscrito en este módulo
+  enrolledDate?: string;
+  progress?: number;
+  isFree?: boolean;
+  isCompleted?: boolean;
+  isInProgress?: boolean;
+  isNotStarted?: boolean;
 }

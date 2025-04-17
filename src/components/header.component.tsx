@@ -9,7 +9,7 @@ export const Header = () => {
   return (
     <header className="bg-white shadow w-screen mx-auto px-4 sm:px-6 lg:px-8 py-4">
       <div className="flex items-center justify-between">
-        <Link href="/dashboard">
+        <Link href={user.role === "teacher" ? "/admin" : "/dashboard"}>
           <div className="flex items-center">
             <Image src="/logo.png" alt="logo" width={40} height={40} />
           </div>

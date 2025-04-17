@@ -43,7 +43,7 @@ export default function Home() {
   useEffect(() => {
     if (user.fullName !== "") {
       if (user.role === "teacher") {
-        route.push("/admin");
+        route.push("/admin?selected=users");
       } else {
         route.push("/dashboard");
       }

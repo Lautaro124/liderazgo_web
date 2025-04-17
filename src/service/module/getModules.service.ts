@@ -1,7 +1,10 @@
 import { IModules } from "@/interface/module.interface";
 import { get } from "../api.service";
 
-export async function getModules(courseId: number): Promise<IModules[] | null> {
+export async function getModules(courseId?: number): Promise<IModules[] | null> {
+  if(!courseId) {
+    return null;
+  }
   const response = await get(`/module/${courseId}`);
   return await (response as Response).json();
 }

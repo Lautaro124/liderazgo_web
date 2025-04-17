@@ -15,7 +15,7 @@ export default function InputField({
   ...restOfProps
 }: InputFieldProps) {
   return (
-    <div>
+    <div className="relative rounded-md shadow-sm">
       {label && (
         <label
           htmlFor={name}
@@ -25,10 +25,8 @@ export default function InputField({
         </label>
       )}
       {leftIcon && (
-        <div className="mt-1 relative rounded-md shadow-sm">
-          <div className="absolute inset-y-[1.20rem] left-0 pl-3 flex items-center pointer-events-none">
-            {leftIcon}
-          </div>
+        <div className={`absolute left-0 ${label? 'bottom-[0.85rem]': 'inset-y-3'} pl-3 flex items-center pointer-events-none `}>
+          {leftIcon}
         </div>
       )}
       <input
@@ -38,10 +36,8 @@ export default function InputField({
         {...restOfProps}
       />
       {rightIcon && (
-        <div className="mt-1 relative rounded-md shadow-sm">
-          <div className="absolute bottom-[1rem] right-0 pr-3 flex items-center pointer-events-none">
-            {rightIcon}
-          </div>
+        <div className={`absolute right-0 ${label? 'bottom-[0.85rem]': 'inset-y-3'} flex items-center pointer-events-none `}>
+          {rightIcon}
         </div>
       )}
     </div>
