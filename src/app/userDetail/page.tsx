@@ -41,7 +41,6 @@ export default async function UserDetailPage({
       </section>
 
       <section className="flex flex-col md:flex-row gap-6">
-        {/* Perfil del Usuario */}
         <div className="flex flex-col items-center bg-white shadow-md rounded-lg p-6 w-full md:w-1/3">
           <Avatar
             imageUrl={user.avatar}
@@ -67,17 +66,7 @@ export default async function UserDetailPage({
           </div>
         </div>
 
-        {/* Contenido de las pestañas */}
         <div className="flex-1">
-          <div className="flex bg-gray-100 rounded-md mb-4">
-            <button className="px-4 py-2 bg-white rounded-l-md font-medium">
-              Inscripciones
-            </button>
-            <button className="px-4 py-2 text-gray-700">
-              Actividad Reciente
-            </button>
-          </div>
-
           <div className="bg-white shadow-md rounded-lg p-6">
             <h3 className="text-lg font-bold mb-2">Cursos Inscritos</h3>
             <p className="text-gray-500 mb-6">
@@ -120,12 +109,28 @@ export default async function UserDetailPage({
                       </div>
                     </div>
 
-                    <h5 className="text-md font-semibold mb-2">
-                      Módulos inscritos:
-                    </h5>
+                    {course.modules.filter((m) => m.isPushed).length !== 0 && (
+                      <h5 className="text-md font-semibold mb-2">
+                        Módulos inscritos:
+                      </h5>
+                    )}
 
                     <div className="space-y-3">
-                      {(course.modules || []).length > 0 ? (
+                      {course.modules.filter((m) => m.isPushed).length ===
+                        0 && (
+                        <div className="flex flex-col items-center justify-center p-8 text-center">
+                          <BookOpen className="h-12 w-12 text-gray-300 mb-3" />
+                          <h4 className="text-lg font-medium text-gray-900">
+                            Sin inscripciones
+                          </h4>
+                          <p className="text-sm text-gray-500 max-w-md mt-1">
+                            El usuario aún no está inscrito en ningún curso.
+                            Inscríbelo para empezar el aprendizaje.
+                          </p>
+                        </div>
+                      )}
+
+                      {course.modules.length > 0 ? (
                         course.modules
                           .filter((m) => m.isPushed)
                           .map((module) => (
